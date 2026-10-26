@@ -56,7 +56,7 @@ class AjaxController extends Controller
 					'tooltip'=>$item->getDn(),
 				])
 			->prepend(
-				$request->create
+				$request->create && can_create_children_in_tree($dn)
 					? [
 						'title'=>sprintf('[%s]',__('Create Entry')),
 						'item'=>Crypt::encryptString(sprintf('*%s|%s','create',$dn)),

@@ -13,6 +13,26 @@ function dn_rdn($string): string
 	return collect(explode(',',$string))->first();
 }
 
+function can_create_children_in_tree(?string $dn): bool
+{
+	if (! is_string($dn) || $dn === '')
+		return TRUE;
+
+	$rdn = dn_rdn($dn);
+	if ($rdn === '')
+		return TRUE;
+
+	foreach (explode('+',$rdn) as $part) {
+		$attribute = strtolower(trim((string) explode('=',$part,2)[0]));
+		$attribute = preg_replace('/;.*$/','',$attribute) ?? $attribute;
+
+		if (in_array($attribute,['cn','uid'],TRUE))
+			return FALSE;
+	}
+
+	return TRUE;
+}
+
 function login_attr_description(): string
 {
 	return Arr::get(config('pla.login.attr'),login_attr_name());
