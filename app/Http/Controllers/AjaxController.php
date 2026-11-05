@@ -52,7 +52,9 @@ class AjaxController extends Controller
 					'title'=>$item->getRdn(),
 					'item'=>$item->getDNSecure(),
 					'icon'=>$item->icon(),
-					'lazy'=>$item->has_children,
+					// 'lazy'=>$item->has_children,
+					// Quick fix for PoC
+					'lazy'=>TRUE,
 					'tooltip'=>$item->getDn(),
 				])
 			->prepend(
