@@ -608,4 +608,26 @@ final class Server
 			->search()
 			->get() ?: NULL;
 	}
+
+	public function members(string $dn,array $attrs=['dn']): ?LDAPCollection
+	{
+	    return $this
+	        ->get(
+	            dn: $dn,
+	            attrs: $attrs)
+	        ->rawFilter('(|(objectClass=inetOrgPerson)(objectClass=posixAccount))')
+	        ->search()
+	        ->get() ?: NULL;
+	}	
+
+	public function memberCandidates(string $dn,array $attrs=['dn']): ?LDAPCollection
+	{
+	    return $this
+	        ->get(
+	            dn: $dn,
+	            attrs: $attrs)
+	        ->rawFilter('(objectClass=*)')
+	        ->search()
+	        ->get() ?: NULL;
+	}	
 }

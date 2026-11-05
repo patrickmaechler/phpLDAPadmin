@@ -94,6 +94,12 @@ class AjaxController extends Controller
 		// Find the base that the request is
 		$base = config('server')
 			->get_base(Crypt::decryptString($request->dn));
+		
+  		$members = config('server')
+			->	memberCandidates(
+  				$base->getDN(),
+  				['dn']
+				) ?? collect();
 
 		return config('server')
 			->subordinates($base->getDN(),['dn'],FALSE)
